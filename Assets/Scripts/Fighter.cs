@@ -42,18 +42,12 @@ public class Fighter : MonoBehaviour {
 	}
 
 	public void OnTriggerEnter(Collider other) {
-		print (other.gameObject.name);
-		if (other.gameObject.name == "ResourceNeg") 
-			print ("entered");
 		_enemy = other.gameObject.GetComponentInChildren<Fighter> ();
 		if (_enemy != null) {
 			if (_enemy.squad == squad)
 				_enemy = null;
-			else {
+			else 
 				StartCoroutine (HitEnemyCR ());
-				if (other.transform.parent.gameObject.name == "ResourceNeg") 
-					print ("setted");
-			}
 		}
 	}
 
@@ -75,8 +69,6 @@ public class Fighter : MonoBehaviour {
 
 	IEnumerator HitEnemyCR() {
 		while (_enemy != null) {
-			if (_enemy.transform.parent.gameObject.name == "ResourceNeg") 
-				print ("hitted");
 			_enemy.GetDamage(unitProperties.power);
 			yield return new WaitForSeconds(2f/unitProperties.attackSpeed);
 		}
