@@ -285,7 +285,7 @@ public class InfluenceMap : GridData
 			return -x - 1;
 		else if (x > EPS)
 			return -x + 1;
-		return 0;
+		return x;
 	}
 
 	void CalculateDesirabilityValues(int i, int j) {
@@ -293,15 +293,16 @@ public class InfluenceMap : GridData
 		_influences [i, j].SecurityScore = (1 * _influences [i, j].influence +
 											2 * _influences [i, j].defenceInfluence) / (1 + 2);
 
-		_influences [i, j].AttackScore = (	-3 * _influences[i, j].SecurityScore +
+		_influences [i, j].AttackScore = (	-3 * MyReverseFunction(_influences[i, j].SecurityScore) +
 		                                  -5 * _influences [i, j].resourceInfluence ) / (8);
 
 		_influences [i, j].DefenceScore = (	5 * _influences [i, j].resourceInfluence +
 		                                   	2 * MyReverseFunction (_influences [i, j].SecurityScore) +
-		                                  	-1 * _influences [i, j].deadUnits) / (5 + 2 + 1); 
+		                                  	-1 * _influences [i, j].deadUnits)
+											/ (5 + 2 + 1); 
 
 		_influences [i, j].ResourceScore = (-3 * _influences [i, j].resourceInfluence +
-											1 * _influences [i, j].SecurityScore) / (3 + 1);
+											1 * _influences [i, j].SecurityScore) / (3);
 
 	}
 	
