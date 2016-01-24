@@ -15,7 +15,7 @@ public class GridDisplay : MonoBehaviour
 	MeshFilter _meshFilter;
 	Mesh _mesh;
 
-	GridData _data;
+	GridData[] _data;
 
 	[SerializeField]
 	Material _material;
@@ -37,8 +37,7 @@ public class GridDisplay : MonoBehaviour
 	
 	Color[] _colors;
 
-	public void SetGridData(GridData m)
-	{
+	public void SetGridData(GridData[] m) {
 		_data = m;
 	}
 
@@ -58,8 +57,8 @@ public class GridDisplay : MonoBehaviour
 		
 		// create squares starting at bottomLeftPos
 		List<Vector3> verts = new List<Vector3>();
-		for (int yIdx = 0; yIdx < _data.Height; ++yIdx) {
-			for (int xIdx = 0; xIdx < _data.Width; ++xIdx) {
+		for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
+			for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
 				Vector3 bl = new Vector3(_staX + (xIdx * gridSize), _objectHeight, _staZ + (yIdx * gridSize));
 				Vector3 br = new Vector3(_staX + ((xIdx+1) * gridSize), _objectHeight, _staZ + (yIdx * gridSize));
 				Vector3 tl = new Vector3(_staX + (xIdx * gridSize), _objectHeight, _staZ + ((yIdx+1) * gridSize));
@@ -73,8 +72,8 @@ public class GridDisplay : MonoBehaviour
 		}
 
 		List<Color> colors = new List<Color>();
-		for (int yIdx = 0; yIdx < _data.Height; ++yIdx) {
-			for (int xIdx = 0; xIdx < _data.Width; ++xIdx) {
+		for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
+			for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
 				colors.Add(Color.white);
 				colors.Add(Color.white);
 				colors.Add(Color.white);
@@ -84,8 +83,8 @@ public class GridDisplay : MonoBehaviour
 		_colors = colors.ToArray();
 		
 		List<Vector3> norms = new List<Vector3>();
-		for (int yIdx = 0; yIdx < _data.Height; ++yIdx) {
-			for (int xIdx = 0; xIdx < _data.Width; ++xIdx) {
+		for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
+			for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
 				norms.Add(Vector3.up);
 				norms.Add(Vector3.up);
 				norms.Add(Vector3.up);
@@ -94,8 +93,8 @@ public class GridDisplay : MonoBehaviour
 		}
 		
 		List<Vector2> uvs = new List<Vector2>();
-		for (int yIdx = 0; yIdx < _data.Height; ++yIdx) {
-			for (int xIdx = 0; xIdx < _data.Width; ++xIdx) {
+		for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
+			for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
 				uvs.Add(new Vector2(0, 0));
 				uvs.Add(new Vector2(1, 0));
 				uvs.Add(new Vector2(0, 1));
@@ -128,7 +127,7 @@ public class GridDisplay : MonoBehaviour
 	}
 	
 	void SetColor(int x, int y, Color c) {
-		int idx = ((y * _data.Width) + x) * 4;
+		int idx = ((y * _data[0].Width) + x) * 4;
 		_colors[idx] = c;
 		_colors[idx+1] = c;
 		_colors[idx+2] = c;
@@ -137,22 +136,27 @@ public class GridDisplay : MonoBehaviour
 
 	void Update()
 	{
-		for (int yIdx = 0; yIdx < _data.Height; ++yIdx) {
-			for (int xIdx = 0; xIdx < _data.Width; ++xIdx) {
-				float value = _data.GetValue(xIdx, yIdx);
-				Color c = _neutralColor;
-				if (value > 0.5f)
-					c = Color.Lerp(_positiveColor, _positive2Color, (value-0.5f)/0.5f);
-				else if (value > 0)
-					c = Color.Lerp(_neutralColor, _positiveColor, value/0.5f);
-				else if (value < -0.5f)
-					c = Color.Lerp(_negativeColor, _negative2Color, -(value+0.5f)/0.5f);
-				else
-					c = Color.Lerp(_neutralColor, _negativeColor, -value/0.5f);
-				SetColor(xIdx, yIdx, c);
+		if (_data != null) {
+			for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
+				for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
+					float value = 0;
+					for (int i = 0; i < _data.Length; ++i) 
+						value += _data [i].GetValue (xIdx, yIdx);
+					value /= _data.Length;
+					Color c = _neutralColor;
+					if (value > 0.5f)
+						c = Color.Lerp (_positiveColor, _positive2Color, (value - 0.5f) / 0.5f);
+					else if (value > 0)
+						c = Color.Lerp (_neutralColor, _positiveColor, value / 0.5f);
+					else if (value < -0.5f)
+						c = Color.Lerp (_negativeColor, _negative2Color, -(value + 0.5f) / 0.5f);
+					else
+						c = Color.Lerp (_neutralColor, _negativeColor, -value / 0.5f);
+					SetColor (xIdx, yIdx, c);
+				}
 			}
-		}
 		
-		_mesh.colors = _colors;
+			_mesh.colors = _colors;
+		}
 	}
 }

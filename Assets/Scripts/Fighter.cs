@@ -11,16 +11,9 @@ public struct UnitSpecification {
 	public float range;
 }
 
-[System.Serializable]
-public enum Squad {
-	SQUAD_A,
-	SQUAD_B
-}
-
 public class Fighter : MonoBehaviour {
 
 	public UnitSpecification unitProperties;
-	public Squad squad;
 	public Image hpImage;
 
 	SimplePropagator _unit;
@@ -28,11 +21,8 @@ public class Fighter : MonoBehaviour {
 	Fighter _enemy;
 	float _initHp;
 
-	void Awake() {
-		_unit = GetComponentInParent<SimplePropagator> ();
-	}
-
 	void Start () {
+		_unit = GetComponentInParent<SimplePropagator> ();
 		_eye = GetComponent<SphereCollider> ();
 		_eye.radius = unitProperties.range;
 		_initHp = unitProperties.hp;
@@ -41,10 +31,16 @@ public class Fighter : MonoBehaviour {
 	void Update () {
 	}
 
+	public int Squad {
+		get {
+			return _unit.squadNo;
+		}
+	}
+
 	public void OnTriggerEnter(Collider other) {
 		_enemy = other.gameObject.GetComponentInChildren<Fighter> ();
 		if (_enemy != null) {
-			if (_enemy.squad == squad)
+			if (_enemy.Squad == Squad)
 				_enemy = null;
 			else 
 				StartCoroutine (HitEnemyCR ());

@@ -1,13 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
-public enum UnitType {
-	Soldier,
-	Defencer,
-	Resource
-}
-
 public interface IPropagator
 {
 	Vector2I GridPosition { get; }
@@ -21,9 +14,10 @@ public class SimplePropagator : MonoBehaviour, IPropagator
 	public float Value { get { return _value; } }
 	public bool IsDead { get { return _isDead; } }
 
-	public InfluenceMapControl _map;
+	public InfluenceMapServer _server;
 	public float changeGoalPeriod = 5f;
-	public UnitType type;
+	public string type;
+	public int squadNo;
 	public bool isStaticUnit = false;
 	
 	Vector3 _bottomLeft;
@@ -32,10 +26,9 @@ public class SimplePropagator : MonoBehaviour, IPropagator
 	NavMeshAgent _navAgent;
 	UnitSpecification _properties;
 
-	public Vector2I GridPosition
-	{
+	public Vector2I GridPosition {
 		get {
-			return _map.GetGridPosition(transform.position);
+			return _server.GetGridPosition(transform.position);
 		}
 	}
 
@@ -43,9 +36,10 @@ public class SimplePropagator : MonoBehaviour, IPropagator
 	{
 		if (!isStaticUnit)
 			_navAgent = GetComponent<NavMeshAgent>();
+
 		_properties = GetComponentInChildren<Fighter> ().unitProperties;
-		_map.RegisterPropagator(this, type);
-		_map.GetMovementLimits(out _bottomLeft, out _topRight);
+		_server.RegisterPropagator(this, type, squadNo);
+		_server.GetMovementLimits(out _bottomLeft, out _topRight);
 
 		if (!isStaticUnit)
 			StartCoroutine (ChangeGoalCR ());
@@ -56,7 +50,7 @@ public class SimplePropagator : MonoBehaviour, IPropagator
 
 	public void Dead() {
 		_isDead = true;
-		_map.DeadUnit (this, _value);
+		_server.DeadPropagator (this, type, squadNo);
 		StartCoroutine (DestroyCR ());
 	}
 

@@ -47,10 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BattleManager.cs" />
+     <Compile Include="Assets\Scripts\DesirabilityValMap.cs" />
+     <Compile Include="Assets\Scripts\DesirabilityValMapControl.cs" />
      <Compile Include="Assets\Scripts\Fighter.cs" />
      <Compile Include="Assets\Scripts\GridDisplay.cs" />
      <Compile Include="Assets\Scripts\InfluenceMap.cs" />
      <Compile Include="Assets\Scripts\InfluenceMapControl.cs" />
+     <Compile Include="Assets\Scripts\InfluenceMapServer.cs" />
      <Compile Include="Assets\Scripts\SimplePropagator.cs" />
      <None Include="Assets\Shaders\VertexUnlit.shader" />
  <Reference Include="UnityEngine.UI">

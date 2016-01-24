@@ -69,10 +69,13 @@
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
 'Assets/Scripts/BattleManager.cs'
+'Assets/Scripts/DesirabilityValMap.cs'
+'Assets/Scripts/DesirabilityValMapControl.cs'
 'Assets/Scripts/Fighter.cs'
 'Assets/Scripts/GridDisplay.cs'
 'Assets/Scripts/InfluenceMap.cs'
 'Assets/Scripts/InfluenceMapControl.cs'
+'Assets/Scripts/InfluenceMapServer.cs'
 'Assets/Scripts/SimplePropagator.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Xml.Linq.dll'
