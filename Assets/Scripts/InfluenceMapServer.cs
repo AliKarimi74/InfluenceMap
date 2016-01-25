@@ -105,9 +105,12 @@ public class InfluenceMapServer : MonoBehaviour {
 	}
 
 	void Start() {
-		_displaySignals.negIsOn = _displaySignals.posIsOn = true;
-		_displaySignals.negIsLowMap = _displaySignals.posIsLowMap = true;
-		_displaySignals.mapIdxNeg = _displaySignals.mapIdxPos = 1;
+		_displaySignals.negIsOn = true;
+		_displaySignals.posIsOn = true;
+		_displaySignals.negIsLowMap = true;
+		_displaySignals.posIsLowMap = true;
+		_displaySignals.mapIdxNeg = 1;
+		_displaySignals.mapIdxPos = 0;
 		ChangeDisplayMode ();
 	}
 	

@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-public enum Strategy {
-	ATTACK,
-	GATHER_RESOURCE
-}
+using Holoville.HOTween;
 
 public class BattleManager : MonoBehaviour {
 
-	static BattleManager _instance;
-
+	public RectTransform posPanel, negPanel;
+	bool _isPosOpen = false, _isNegOpen = false;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -25,6 +22,20 @@ public class BattleManager : MonoBehaviour {
 		Time.timeScale = sp;
 	}
 
-//	public Strategy GetStrategy(bool is_neg_squad) {
-//	}
+	public void TogglePanel(bool is_pos) {
+		if (is_pos) {
+			if (_isPosOpen) 
+				HOTween.To(posPanel, 0.5f, new TweenParms().Prop("anchoredPosition", new Vector2(-100, posPanel.anchoredPosition.y)));
+			else 
+				HOTween.To(posPanel, 0.5f, new TweenParms().Prop("anchoredPosition", new Vector2(100, posPanel.anchoredPosition.y)));
+			_isPosOpen = !_isPosOpen;
+		} else {
+			if (_isNegOpen) 
+				HOTween.To(negPanel, 0.5f, new TweenParms().Prop("anchoredPosition", new Vector2(100, posPanel.anchoredPosition.y)));
+			else 
+				HOTween.To(negPanel, 0.5f, new TweenParms().Prop("anchoredPosition", new Vector2(-100, posPanel.anchoredPosition.y)));
+			_isNegOpen = !_isNegOpen;
+		}
+	}
+	
 }

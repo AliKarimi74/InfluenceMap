@@ -140,9 +140,13 @@ public class GridDisplay : MonoBehaviour
 			for (int yIdx = 0; yIdx < _data[0].Height; ++yIdx) {
 				for (int xIdx = 0; xIdx < _data[0].Width; ++xIdx) {
 					float value = 0;
-					for (int i = 0; i < _data.Length; ++i) 
-						value += _data [i].GetValue (xIdx, yIdx);
-					value /= _data.Length;
+					float max_val = 0;
+					for (int i = 0; i < _data.Length; ++i) {
+						if (Mathf.Abs(_data [i].GetValue (xIdx, yIdx)) > max_val) {
+							max_val = Mathf.Abs(_data [i].GetValue (xIdx, yIdx));
+							value = _data [i].GetValue (xIdx, yIdx);
+						}
+					}
 					Color c = _neutralColor;
 					if (value > 0.5f)
 						c = Color.Lerp (_positiveColor, _positive2Color, (value - 0.5f) / 0.5f);

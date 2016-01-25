@@ -1,13 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InfluenceMapControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/InfluenceMapServer.cs">
     <Files>
-      <File FileName="Assets/Scripts/InfluenceMapControl.cs" Line="44" Column="3" />
+      <File FileName="Assets/Scripts/InfluenceMapControl.cs" Line="23" Column="94" />
       <File FileName="Assets/Scripts/InfluenceMap.cs" Line="23" Column="37" />
-      <File FileName="Assets/Scripts/InfluenceMapServer.cs" Line="24" Column="2" />
-      <File FileName="Assets/Scripts/GridDisplay.cs" Line="100" Column="32" />
+      <File FileName="Assets/Scripts/InfluenceMapServer.cs" Line="156" Column="11" />
+      <File FileName="Assets/Scripts/GridDisplay.cs" Line="139" Column="20" />
       <File FileName="Assets/Scripts/SimplePropagator.cs" Line="52" Column="18" />
       <File FileName="Assets/Scripts/Fighter.cs" Line="43" Column="29" />
+      <File FileName="Assets/Scripts/DesirabilityValMap.cs" Line="75" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
